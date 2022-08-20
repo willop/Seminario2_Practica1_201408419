@@ -27,10 +27,11 @@ order by year; ''',conn)
 
     elif num == '3':
         conn = connect.connect()
-        df = pd.read_sql(''' select Anio as year, sum(ID_Tsunami) as No_Tsunamis from Tsunami
+        df = pd.read_sql(''' select Lugar.Pais, Anio as year, sum(ID_Tsunami) as No_Tsunamis from Tsunami
 inner join Tiempo on Tiempo.ID_tiempo = Tsunami.FK_id_tiempo
-group by Anio
-order by year; ''',conn)
+inner join Lugar on Lugar.ID_lugar = Tsunami.FK_id_Lugar
+group by Lugar.Pais, Anio
+order by Lugar.Pais;''',conn)
         print('\n\n\n\n\n')
         print('********* Reporte 3 ********')
         print(df.to_string())
